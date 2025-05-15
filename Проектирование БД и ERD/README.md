@@ -14,4 +14,4 @@
 между таблицами suppliers и phones (supplierphone).
 
 Диаграмма построена с помощью инструмента draw.io:
-https://drive.google.com/file/d/1DjNA5CwxR4l7VKUY4vvBaKQLIQPTsTvN/view?usp=sharing
+https://drive.google.com/file/d/1Dw28TxxG5OUvH3ZCosVsJwQz8T_bRKNY/view?usp=sharing
