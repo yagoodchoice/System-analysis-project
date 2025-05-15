@@ -1,0 +1,273 @@
+openapi: 3.0.1
+info: 
+  title: "Pet-project интернет-магазина смартфонов"
+  description: "Документация API работе с каталогом товаров"
+  version: "1.0"
+  contact:
+    name: "smartphonestore"
+    url: "smartphonestore.com"
+    email: "smartphonestore@gmail.com"
+servers:    
+  - url: https://smartphonestore.com/api/v1
+    description: test server
+tags: 
+  - name: phones
+    description: Запросы для смартфонов
+  - name: phone chargers
+    description: Запросы для зарядных устройств
+paths:
+  /products:
+    get:
+      tags:
+        - phones
+      summary: Получение списка смартфонов
+      description: Получение полного каталога или с применением фильтра по видам операционной системы
+      operationId: GetPhones
+      parameters: 
+        - name: operation system
+          in: query
+          description: Возможность применения фильтрации по видам ОС
+          required: true
+          schema:
+            type: string
+            default: all
+            enum:
+              - all
+              - android
+              - iOS
+        - name: limit
+          in: query
+          description: Определяет количество товаров на одной странице
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+        - name: offset
+          in: query
+          description: Определяет смещение, с которого начинается выборка
+          required: true
+          allowEmptyValue: false
+          schema:
+            type: integer
+      responses:
+        "200":
+          description: Запрос успешно выполнен
+          content:
+            application/json: 
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/phone"   
+        "404":
+          description: Не найдено
+        "500":
+          description: Внутренняя ошибка сервера
+    post:
+      tags:
+        - phones
+      summary: Добавление нового товара
+      description: Добавление нового смартфона в каталог товаров интернет-магазина
+      operationId: AddPhone
+      requestBody:
+        description: Добавление нового товара в каталог
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/phone"
+      responses:
+        "201":
+          $ref: "#/components/responses/productcreated"
+        "400":
+          description: Недействительный запрос
+        "401":
+          description: Неавторизованный пользователь
+        "403":
+          description: Недостаточно прав для совершения действия
+        "500":
+          description: Внутренняя ошибка сервера
+      security: 
+        - appbasic: []
+  /products/{phone_id}:  
+    put:
+      tags:
+        - phones
+      summary: Обновление товара
+      description: Обновление существующего товара целиком
+      operationId: EditPhone
+      parameters:
+        - name: phone_id
+          in: path
+          description: Указание id конкретного товара
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Информация о товаре с обновленными данными
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/phone"
+      responses:
+        "200":
+          description: Товар обновлен
+        "400":
+          description: Недействительный запрос
+        "401":
+          description: Неавторизованный пользователь
+        "403":
+          description: Недостаточно прав для совершения действия
+        "404":        
+          description: Товар не найден
+      security: 
+        - appbasic: []
+    delete:
+      tags:
+        - phones
+      summary: Удаление товара
+      description: Удаление существующего товара из каталога
+      operationId: DelPhone
+      parameters:
+        - name: phone_id
+          in: path
+          description: Указание id конкретного товара
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Нет содержимого
+        "401":
+          description: Неавторизованный пользователь
+        "403":
+          description: Недостаточно прав для совершения действия
+        "404":        
+          description: Товар не найден
+      security: 
+        - appbasic: []
+  /products/{phone_id}/charger:
+    post:
+      tags:
+        - phone chargers
+      summary: Добавление товара "зарядное устройство"
+      description: Добавление товара "зарядное устройство" для конкретного смартфона
+      operationId: AddCharger
+      parameters:
+        - name: phone_id
+          in: path
+          description: Указание id конкретного товара
+          required: true
+          schema:
+            type: string
+      requestBody:
+        description: Добавление информации о зарядном устройстве
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/charger'
+      responses:
+        "201":
+          $ref: '#/components/responses/chargercreated'
+        "400":
+          description: Недействительный запрос
+        "401":
+          description: Неавторизованный пользователь
+        "403":
+          description: Недостаточно прав для совершения действия
+        "500":
+          description: Внутренняя ошибка сервера
+      security: 
+        - appbasic: []
+components:
+  schemas:
+    phone:
+      type: object
+      required:
+        - phone_id
+        - brand
+        - model
+        - description
+        - OS
+        - price
+        - images
+      properties:
+        phone_id:
+          type: string
+          example: gal8586dem
+        brand:
+          type: string
+          description: Название производителя
+          enum:
+            - Samsung
+            - Huawei
+            - Apple
+        model:
+          type: string
+        description:  
+          type: string
+        OS:
+          type: string
+          description: Тип операционной системы
+          enum: 
+            - android
+            - iOS
+        price:
+          type: string
+          example: 1000$
+        images:
+          type: array
+          items:
+            type: string
+            example: https://smartphonestore.com/pictures/12345
+    charger:
+      type: object
+      required:
+        - charger_id
+        - model
+        - description
+        - price
+        - images
+      properties:
+        charger_id:
+          type: string
+          example: g8586d
+        model:
+          type: string
+        description:  
+          type: string
+        price:
+          type: string
+          example: 100$
+        images:
+          type: array
+          items:
+            type: string
+            example: https://smartphonestore.com/pictures/123
+  responses:
+    productcreated:
+      description: Товар создан
+      content:
+        application/json:
+          schema:
+            type: string
+            properties:
+              phone_id:
+                type: string
+                example: gal8586dem
+    chargercreated:
+      description: Товар создан
+      content:
+        application/json:
+          schema:
+            type: string
+            properties:
+              charger_id:
+                type: string
+                example: gal8586
+  securitySchemes:
+    appbasic:
+      type: http
+      scheme: basic
+security:
+  - appbasic: []
+
+
