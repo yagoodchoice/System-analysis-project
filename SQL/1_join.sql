@@ -1,5 +1,5 @@
-select room_id,
+SELECT room_id,
 	FLOOR(AVG(rating)) as rating
-from Reviews a
+FROM Reviews a
 	join reservations b on a.reservation_id = b.id
 GROUP by room_id;
