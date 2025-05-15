@@ -5,5 +5,8 @@
 [PlantUML. Sequence diagram](https://github.com/yagoodchoice/System-analysis-project/blob/main/Sequence%20diagram%20и%20Plant%20UML/sequencediagram%20PlantUml.txt)<br />
 [Use Case](https://github.com/yagoodchoice/System-analysis-project/blob/main/UseCase/Use%20Case.pdf)<br />
 [Use Case Map](https://github.com/yagoodchoice/System-analysis-project/blob/main/UseCase/UCM%20(Use%20case%20map)%20Пример.png?raw=true)<br />
-[]()<br />
-[]()<br />
+[Тестирование API через Postman ](https://github.com/yagoodchoice/System-analysis-project/blob/main/Postman/README.md#тестирование-api-через-postman)<br />
+[Пример выполнения запроса в Postman](https://github.com/yagoodchoice/System-analysis-project/blob/main/Postman/Пример%20получения%20проекта%20по%20id.png?raw=true)<br />
+[OpenAPI документация (json)](https://github.com/yagoodchoice/System-analysis-project/blob/main/Swagger/OpenAPI.json)<br />
+[OpenAPI документация (yaml)](https://github.com/yagoodchoice/System-analysis-project/blob/main/Swagger/OpenAPI.yaml)<br />
+[SQL задачи](https://github.com/yagoodchoice/System-analysis-project/blob/main/SQL/README.md#портфолио-проектов-sql)<br />
